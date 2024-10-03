@@ -1,11 +1,24 @@
 <script>
+    import {v4 as uuid} from "uuid"
     import Button from "./Button.svelte";
     export let todos = [];
     let input;
     let inputOption2 = '';
 
     const handleAddToDo = () => {
-        console.log(input);
+        if(!input){
+            return;
+        }
+
+        todos.push({
+            id: uuid(),
+            title: input.value,
+            completed: false
+        });
+
+        // This line is necessary because an explicit assignment operator is needed for the component to correctly update
+        todos = todos;
+
     }
 </script>
 
@@ -30,6 +43,6 @@
         <!-- The preferred svelte way is to directly bind the value of the input to a variable -->
         <input bind:value={inputOption2}/>
         <p>Input Option 2 value: {inputOption2}</p>
-        <Button type="submit" bgColor="crimson">Add</Button>
+        <Button type="submit" bgColor="crimson" disabled={!input}>Add</Button>
     </form>
 </div>
