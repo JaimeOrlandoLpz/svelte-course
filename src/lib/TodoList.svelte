@@ -18,6 +18,7 @@
 
         // This line is necessary because an explicit assignment operator is needed for the component to correctly update
         todos = todos;
+        input.value = "";
 
     }
 </script>

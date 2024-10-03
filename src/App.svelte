@@ -8,7 +8,7 @@
     import TodoList from "./lib/TodoList.svelte";
     let name = 'Svelte';
 
-    const todos = [
+    let todos = [
         {
             id: uuid(),
             title: 'Todo 1',
@@ -46,8 +46,10 @@
     <span slot="leftContent">Hi Left</span>
     Button Text (slot) Is hovering left: {isLeftHovered}
 </Button>
-
-<TodoList todos={todos}></TodoList>
+<!-- This is tricky because the todos prop that gets updated is the one inside the TodoList component but we need the const in our app component to be equally updated -->
+<!-- Through the bind operation we will keep the prop in the Child and parent components synchronized -->
+<h2>Todos size {todos.length}</h2>
+<TodoList bind:todos={todos}></TodoList>
 
 
 
