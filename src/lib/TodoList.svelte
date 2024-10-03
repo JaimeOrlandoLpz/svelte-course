@@ -1,26 +1,18 @@
 <script>
-    import {v4 as uuid} from "uuid"
+    import { createEventDispatcher } from "svelte";
     import Button from "./Button.svelte";
     export let todos = [];
     let input;
-    let inputOption2 = '';
+    let inputOption2 = "";
 
+    const dispatch = createEventDispatcher();
     const handleAddToDo = () => {
-        if(!input){
-            return;
-        }
-
-        todos.push({
-            id: uuid(),
-            title: input.value,
-            completed: false
+        dispatch('addtodo', {
+            title: input.value
         });
 
-        // This line is necessary because an explicit assignment operator is needed for the component to correctly update
-        todos = todos;
         input.value = "";
-
-    }
+    };
 </script>
 
 <div class="todo-list-wrapper">
@@ -42,7 +34,7 @@
         }}/> -->
 
         <!-- The preferred svelte way is to directly bind the value of the input to a variable -->
-        <input bind:value={inputOption2}/>
+        <input bind:value={inputOption2} />
         <p>Input Option 2 value: {inputOption2}</p>
         <Button type="submit" bgColor="crimson" disabled={!input}>Add</Button>
     </form>

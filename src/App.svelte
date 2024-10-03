@@ -8,6 +8,7 @@
     import TodoList from "./lib/TodoList.svelte";
     let name = 'Svelte';
 
+    // We will make this the only source of truth (All changes to todos will happen from here, the parent)
     let todos = [
         {
             id: uuid(),
@@ -25,6 +26,17 @@
             completed: true
         }
     ]
+    
+    // When dispatching the custom event from a Child component, we can pass an object as a second parameter and this object will represent event.detail
+    function handleAddToDo(event){
+        todos.push({
+            id: uuid(),
+            title: event.detail.title,
+            completed: false
+        });
+        todos = todos;
+        console.log(event.detail.title);
+    }
 </script>
 
 <!--Markup-->
@@ -49,7 +61,7 @@
 <!-- This is tricky because the todos prop that gets updated is the one inside the TodoList component but we need the const in our app component to be equally updated -->
 <!-- Through the bind operation we will keep the prop in the Child and parent components synchronized -->
 <h2>Todos size {todos.length}</h2>
-<TodoList bind:todos={todos}></TodoList>
+<TodoList bind:todos={todos} on:addtodo={handleAddToDo}></TodoList>
 
 
 
